@@ -1,5 +1,5 @@
 # Project_1
-Coding revision to brush up on mern however event was unsuccessful
+Coding revision and practice to brush up on mern however event was unsuccessful
 # Cause
 MUI makeStyle() has been deprecated 
 ref: https://mui.com/system/styles/basics/
