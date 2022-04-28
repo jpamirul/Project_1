@@ -7,11 +7,11 @@ import useStyles from "./styles";
 import dio from "./images/dio.jpg";
 
 const App = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <Container maxWidth="lg">
-      <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography className={classes.heading} variant="h2" align="center">
+      <AppBar className={""} position="static" color="inherit">
+        <Typography className={""} variant="h2" align="center">
           Memories
         </Typography>
         <img src={dio} alt="dio" height="100" />
