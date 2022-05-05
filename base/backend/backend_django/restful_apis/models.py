@@ -6,7 +6,7 @@ class Budget(models.Model):
     inFlow = models.PositiveIntegerField()
     outFlow = models.PositiveIntegerField()
     balanceFlow = models.IntegerField(default=0)
-    date = models.DateField(auto_now=True)
+    date = models.DateField()
 
     def __str__(self):
         return self.inFlow, self.outFlow

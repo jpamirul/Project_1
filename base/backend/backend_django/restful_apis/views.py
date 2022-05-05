@@ -5,9 +5,9 @@ from .serializers import BudgetSerializer
 from .models import Budget
 
 class BudgetDetails(APIView):
-    def get(self, request, pk):
-        budget = Budget.objects.get(id=pk)
-        serializer = BudgetSerializer(budget, many=False)
+    def get(self, request):
+        budget = Budget.objects.all()
+        serializer = BudgetSerializer(budget, many=True)
 
         return Response(serializer.data)
 
@@ -25,9 +25,9 @@ class BudgetInput(APIView):
 
 class BudgetUpdate(APIView):
     def patch(self, request, pk):
-        budget = Budget.objects.get(id=pk)
+        budget = Budget.objects.get(date=pk)
         serializer = BudgetSerializer(instance=budget, data=request.data, partial=True)
-
+ 
         if serializer.is_valid():
             serializer.save()
 
@@ -39,3 +39,10 @@ class BudgetDelete(APIView):
         budget.delete()
 
         return Response('Budget input has been deleted')
+
+class pieBudgetDetails(APIView):
+    def get(self, request, pk):
+        budget = Budget.objects.get(date=pk)
+        serializer = BudgetSerializer(budget, many=False)
+
+        return Response(serializer.data)

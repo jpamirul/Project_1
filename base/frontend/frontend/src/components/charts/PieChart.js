@@ -1,35 +1,42 @@
-import React from "react";
-import Chart from "react-apexcharts";
+import React, { useState, useEffect } from "react";
+import ReactApexChart from "react-apexcharts";
 
-const series = [44, 55];
-const labels = ["Money In", "Money Out"];
+const PieChart = (props) => {
+  //   const [dataGroup, setData] = useState([]);
 
-const options = {
-  options: {
-    chart: {
-      width: 380,
-      type: "pie",
-    },
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 200,
-          },
-          legend: {
-            position: "top",
+  console.log(props.pieInflow);
+
+  const inflow = props.pieInflow;
+  const outflow = props.pieOutflow;
+
+  const series = [inflow, outflow];
+  const labels = ["Money In", "Money Out"];
+
+  const options = {
+    options: {
+      chart: {
+        width: 380,
+        type: "pie",
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+            legend: {
+              position: "top",
+            },
           },
         },
-      },
-    ],
-  },
-};
+      ],
+    },
+  };
 
-const PieChart = () => {
   return (
     <div>
-      <Chart
+      <ReactApexChart
         labels={labels}
         options={options}
         series={series}
