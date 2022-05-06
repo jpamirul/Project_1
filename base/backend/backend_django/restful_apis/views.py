@@ -25,9 +25,9 @@ class BudgetInput(APIView):
 
 class BudgetUpdate(APIView):
     def patch(self, request, pk):
-        budget = Budget.objects.get(date=pk)
+        budget = Budget.objects.get(id=pk)
         serializer = BudgetSerializer(instance=budget, data=request.data, partial=True)
- 
+
         if serializer.is_valid():
             serializer.save()
 

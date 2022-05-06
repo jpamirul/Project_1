@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import HeatMap from "../charts/HeatMap";
 import PieChart from "../charts/PieChart";
+import Edit from "../edit/Edit";
 
 const BudgetInput = () => {
   const [inflow, setInflow] = useState("");
   const [outflow, setOutflow] = useState("");
   const [balanceflow, setBalanceFlow] = useState("");
+  const [appear, setAppear] = useState(false);
+  const [targetId, setTargetId] = useState("");
 
   const [data, setData] = useState([]);
   const [date, setDate] = useState(new Date());
@@ -14,9 +17,6 @@ const BudgetInput = () => {
 
   const [pieInflow, setPieInflow] = useState("");
   const [pieOutflow, setPieOutflow] = useState("");
-
-  console.log(data);
-  console.log(pieInflow);
 
   const onDateChange = (nextDate) => {
     setDate(nextDate);
@@ -69,38 +69,11 @@ const BudgetInput = () => {
     // setPieOutflow(retrieveData[0].outFlow);
   };
 
-  const getPieBudget = async () => {
-    const url = `http://127.0.0.1:8000/api/budget-pie/${date}`;
-    const response = await fetch(url, {
-      method: "GET",
-      mode: "cors",
-    });
-    const retrieveData = await response.json();
-    setData(retrieveData);
-    setPieInflow(retrieveData[0].inFlow);
-    setPieOutflow(retrieveData[0].outFlow);
-  };
-
   const deleteBudget = async (id) => {
     try {
       const url = `http://127.0.0.1:8000/api/budget-delete/${id}/`;
       const response = await fetch(url, {
         method: "DELETE",
-        mode: "cors",
-      });
-      if (response.status == 200) {
-        getBudget();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const updateBudget = async (date) => {
-    try {
-      const url = `http://127.0.0.1:8000/api/budget-update/${date}/`;
-      const response = await fetch(url, {
-        method: "PATCH",
         mode: "cors",
       });
       if (response.status == 200) {
@@ -134,11 +107,17 @@ const BudgetInput = () => {
     deleteBudget(id);
   };
 
-  const handleUpdateBudget = (date) => {
-    console.log(date);
-    const formattedDate = date.toISOString();
-    console.log(formattedDate);
-    updateBudget(date);
+  const functionAppear = (id) => {
+    setAppear(!appear);
+    setTargetId(id);
+  };
+
+  const functionPieinflow = (inflow) => {
+    setPieInflow(inflow);
+  };
+
+  const functionPieoutflow = (outflow) => {
+    setPieOutflow(outflow);
   };
 
   useEffect(() => {
@@ -147,28 +126,49 @@ const BudgetInput = () => {
 
   const tableDisplay = data.map((item) => {
     return (
-      <tr>
-        <td>{item.id}</td>
-        <td>{item.inFlow}</td>
-        <td>{item.outFlow}</td>
-        <td>{item.balanceFlow}</td>
-        <td>{item.date}</td>
-        <td>
-          <button
-            onClick={() => {
-              handleDeleteBudget(item.id);
-              handleUpdateBudget(item.date);
-            }}
-          >
-            delete
-          </button>
-        </td>
-      </tr>
+      <>
+        <tr>
+          <td>{item.id}</td>
+          <td>{item.inFlow}</td>
+          <td>{item.outFlow}</td>
+          <td>{item.balanceFlow}</td>
+          <td>{item.date}</td>
+          <td>
+            <button
+              onClick={() => {
+                handleDeleteBudget(item.id);
+              }}
+            >
+              delete
+            </button>
+            <button
+              onClick={() => {
+                functionAppear(item.id);
+              }}
+            >
+              edit
+            </button>
+            <button
+              onClick={() => {
+                functionPieinflow(item.inFlow);
+                functionPieoutflow(item.outFlow);
+              }}
+            >
+              send to pie
+            </button>
+          </td>
+        </tr>
+      </>
     );
   });
 
   return (
     <>
+      {appear ? (
+        <Edit id={targetId} getBudget={getBudget} setAppear={setAppear} />
+      ) : (
+        ""
+      )}
       <table>
         <thead>
           <tr>
@@ -206,13 +206,6 @@ const BudgetInput = () => {
         <label>Balance: {balanceflow}</label>
         <button className="budgetBtn" type="submit" onClick={handleBalanceFlow}>
           submit
-        </button>
-        <button
-          className="updateBtn"
-          type="submit"
-          onClick={handleUpdateBudget}
-        >
-          update
         </button>
       </form>
       <HeatMap />
