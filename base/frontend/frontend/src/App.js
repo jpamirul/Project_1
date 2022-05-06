@@ -10,13 +10,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Kenny is useless</h1>
+        <h1>budget visual</h1>
         <Routes>
           <Route path="/" element={<Navigate replace to="HomePage" />} />
           {/* ^ route to homepage */}
           <Route path="/HomePage" element={<HomePage />} />
-          <Route path="/LogIn" element={<LogIn />} />
-          <Route path="/RegisterPage" element={<RegisterPage />} />
+          {/* <Route path="/LogIn" element={<LogIn />} />
+          <Route path="/RegisterPage" element={<RegisterPage />} /> */}
           <Route path="/InputPage" element={<BudgetInput />} />
           <Route path="/HeatMap" element={<HeatMap />} />
           <Route path="/PieChart" element={<PieChart />} />

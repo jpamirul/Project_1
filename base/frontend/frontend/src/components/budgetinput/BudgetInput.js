@@ -181,7 +181,7 @@ const BudgetInput = () => {
         </thead>
         <tbody>{tableDisplay}</tbody>
       </table>
-      <Calendar onChange={onDateChange} value={date} />
+      <Calendar onChange={onDateChange} value={date} defaultView={"year"} />
 
       <form className="form" onSubmit={handleSubmitBudget}>
         <label>
