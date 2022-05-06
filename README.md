@@ -10,6 +10,7 @@ Final project webapp on budget and expense. Displays budget into visuals (Piecha
 # IMPORTANT NOTE
 1. THERE IS NO VALIDATION, please follow the instructions 
 2. If the heatmap does not display all entries, please refresh the page
+3. Please use this directory http://localhost:3000/inputpage? as the other directories are still on work
 # Tech things used
-  STACK: React18, Django, PostgreSQL
-  Packages: react-calendar, apexchart
+1. STACK: React18, Python, Django, PostgreSQL
+2. Packages: react-calendar, apexchart
